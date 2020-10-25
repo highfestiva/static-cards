@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>PK</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <link rel="stylesheet" href="stajl.css" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+
+  <script>
+function loadIt(step) {
+  $.get(step+".html")
+  .done(function(html) {
+    $(".c").html(html);
+    window.location.hash = step;
+  })
+  .fail(function() {
+    if (!urlStep) {
+      if (step > 1) {
+        loadIt(parseInt(step/2));
+      }
+    } else if (step > 1) {
+      loadIt(1);
+    }
+  });
+}
+
+var urlStep = window.location.hash;
+var step = parseInt(urlStep.replace("#","")) || parseInt(Math.random()*100+1);
+loadIt(step);
+  </script>
+
+</head>
+<body>
+  <div class="p">&lt;</div>
+  <div class="c"></div>
+  <div class="n">&gt;</div>
+</body>
+<html>
