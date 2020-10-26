@@ -21,6 +21,7 @@
 
 <script>
 function loadIt(step, seek) {
+  window.step = step;
   $.getJSON(step+".json")
   .done(function(d) {
     $(".t").html(d["t"]);
