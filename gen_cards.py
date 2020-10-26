@@ -41,5 +41,5 @@ if t:
     w()
 
 max_cards = fn-1
-s = ''.join([re.sub(r'(maxStep =) (\d+);', r'\1 %s;'%max_cards, line) for line in open('index.html')])
-print(s)
+s = ''.join([re.sub(r'(maxStep =) (\d+)', r'\1 %s'%max_cards, line) for line in open('index.html')])
+print(s, end='', file=open('index.html','w'))

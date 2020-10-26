@@ -48,7 +48,7 @@ function loadIt(step, seek) {
 }
 
 var urlStep = window.location.hash;
-var maxStep = 100;
+var maxStep = 2;
 var step = parseInt(urlStep.replace("#","")) || parseInt(Math.random()*maxStep+1);
 loadIt(step, !urlStep);
 $("td.p").click(function(){loadIt(step-1 || maxStep, true);});
