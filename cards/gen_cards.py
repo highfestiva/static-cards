@@ -9,12 +9,18 @@ alts = []
 fn = 1
 
 def w():
-    global fn
+    global fn, c
     with open('%s.json'%fn, 'w') as f:
+        c = r'<img src=\"%s\"/>'%c if c.strip() else ''
+        a = []
+        for alt in alts:
+            alt = [w.strip() for w in alt.split('|')]
+            a.append(r'"<a href=\"%s\">%s<img src=\"cards/%s\"/></a>"' % (alt[2],alt[0].strip(' -'),alt[1]))
+        a = '[' + ',\n       '.join(a) + ']'
         print('{"t": "%s",'%t, file=f)
         print(' "c": "%s",'%c, file=f)
         print(' "b": "%s",'%b, file=f)
-        print(' "f": %s  }'%str(alts).replace("'",'"'), file=f)
+        print(' "f": %s  }'%a, file=f)
     fn += 1
 
 
@@ -41,5 +47,8 @@ if t:
     w()
 
 max_cards = fn-1
-s = ''.join([re.sub(r'(maxStep =) (\d+)', r'\1 %s'%max_cards, line) for line in open('index.html')])
-print(s, end='', file=open('index.html','w'))
+orig_s = open('../index.html').read()
+s = ''.join([re.sub(r'(maxStep =) (\d+)', r'\1 %s'%max_cards, line) for line in open('../index.html')])
+if s != orig_s:
+    print(s, end='', file=open('../index.html','w'))
+    print('rewrote index.html')

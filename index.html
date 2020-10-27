@@ -1,38 +1,41 @@
 <html>
 <head>
-  <title>Static Cards</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="initial-scale=1.0">
+  <title>Static Cards</title>
   <link rel="stylesheet" href="scards.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <table class="f">
-  <tr><td class="t">Loading...</td></tr>
-
-  <tr><td><table class="m">
-    <tr><td class="p"><div class="p">&lt;</div></td><td class="c"><div class="i"></div></td><td class="n"><div class="n">&gt;</div></td></tr>
-  </table></td></tr>
-
-  <tr><td class="b"></td></tr>
+    <tr><td class="t">Loading...</td></tr>
+    <tr><td>
+      <table class="m">
+        <tr><td class="p"><div class="p">&lt;</div></td><td class="c"></td><td class="n"><div class="n">&gt;</div></td></tr>
+      </table>
+    </td></tr>
+    <tr><td class="b"></td></tr>
   </table>
 
   <div class="footer"></div>
 </body>
 
 <script>
-function loadIt(step, seek) {
+function loadIt(step, seek, setUrl) {
   window.step = step;
-  $.getJSON(step+".json")
+  $.getJSON("cards/"+step+".json")
   .done(function(d) {
     $(".t").html(d["t"]);
-    $(".i").html(d["c"]);
+    $(".c").html(d["c"]);
     $(".b").html(d["b"]);
     var footer = "";
     (d["f"]||[]).map(function(v) {
       footer += '<div class="s">'+v+'</div>';
     });
     $(".footer").html(footer);
-    window.location.hash = step;
+    if (setUrl) {
+      window.location.hash = step;
+    }
     if (step > maxStep) {
       maxStep = step;
     }
@@ -40,20 +43,20 @@ function loadIt(step, seek) {
   .fail(function() {
     if (seek) {
       if (step > 1) {
-        loadIt(parseInt(step/2), true);
+        loadIt(parseInt(step/2), true, setUrl);
       }
     } else if (step > 1) {
-      loadIt(1, false);
+      loadIt(1, false, setUrl);
     }
   });
 }
 
 var urlStep = window.location.hash;
 var maxStep = 2;
-var step = parseInt(urlStep.replace("#","")) || parseInt(Math.random()*maxStep+1);
-loadIt(step, !urlStep);
-$("td.p").click(function(){loadIt(step-1 || maxStep, true);});
-$("td.n").click(function(){loadIt(step+1, false);});
+var step = parseInt(urlStep.replace("#","")) || (urlStep==="#random"? parseInt(Math.random()*maxStep+1) : maxStep);
+loadIt(step, !urlStep, urlStep!=="#random");
+$("td.p").click(function(){loadIt(step-1 || maxStep, true, true);});
+$("td.n").click(function(){loadIt(step+1, false, true);});
 </script>
 
 <html>

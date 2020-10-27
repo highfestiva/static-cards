@@ -32,7 +32,7 @@ table {
 	vertical-align: top;
 }
 
-.i {
+.c > * {
 	width: 40vh;
 	height: 40vh;
 	min-width: 10em;
@@ -46,7 +46,11 @@ table {
 td.p, td.n {
 	width: 30%;
 	cursor: pointer;
-	color: #fff5;
+	color: #ddd5;
+	user-select: none;
+}
+td.p:hover, td.n:hover {
+	color: #ddd;
 }
 div.p, div.n {
 	font-size: 600%;
@@ -58,6 +62,25 @@ div.p, div.n {
 	bottom: 0;
 	right: 0;
 }
+
+.s {
+	text-align: right;
+}
+
+.footer img {
+	height: 4vh;
+	padding: 0.7vh;
+	vertical-align: middle;
+}
+
+a {
+	color: #ddd8;
+	text-decoration: none;
+}
+a:hover {
+	color: #ddd;
+}
+
 
 @media 	only screen and (max-width: 1100px),
 		only screen and (max-height: 750px),
@@ -73,15 +96,16 @@ div.p, div.n {
     height: 80%;
 }
 
-.i {
+.c > * {
 	width: 28vh;
 	height: 28vh;
 	min-width: 3em;
 	min-height: 3em;
+	max-width: 95%;
 }
 
-.t,.b {
-	padding: 0.2em;
+td.p, td.n {
+	width: 15%;
 }
 
 }
